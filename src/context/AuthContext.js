@@ -5,7 +5,7 @@ const AuthContext = createContext(null);
 
 export const useAuth = () => useContext(AuthContext);
 
-const API_BASE_URL =  ['http://localhost:5005'||'https://pm-back.onrender.com'];
+const API_BASE_URL =  'https://pm-back.onrender.com';
 
 
 export const AuthProvider = ({ children, onSessionExpired }) => {
