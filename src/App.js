@@ -56,7 +56,7 @@ function App({ messages, setMessages, showToast }) {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<DashboardLayout messages={messages} setMessages={setMessages} showToast={showToast} />} />
+                <Route path="/dashboard" element={<DashboardLayout messages={messages} setMessages={setMessages} showToast={showToast} />} />
                 <Route path="/add-message" element={<AddMessageWrapper />} />
                 <Route path="/add-project" element={<AddProject />} />
                 <Route path="/login" element={<Login showToast={showToast} />} />

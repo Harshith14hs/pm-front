@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 
-const API_BASE_URL =  'https://pm-back.onrender.com';
+const API_BASE_URL =  ['http://localhost:5005'||'https://pm-back.onrender.com'];
 const API_URL = `${API_BASE_URL}/api/auth/register`;
 
 const Signin = (props) => {
