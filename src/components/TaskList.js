@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './TaskList.css';
+const API_BASE_URL =  'http://localhost:5005';
 
-const API_BASE_URL = process.env.NODE_ENV === 'production'
-  ? 'https://project-back-ujdy.onrender.com'
-  : 'http://localhost:5005';
 const API_URL = `${API_BASE_URL}/api/tasks`;
 
 const TaskList = ({ project }) => {

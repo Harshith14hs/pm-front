@@ -5,9 +5,8 @@ const AuthContext = createContext(null);
 
 export const useAuth = () => useContext(AuthContext);
 
-const API_BASE_URL = process.env.NODE_ENV === 'production'
-  ? 'https://project-back-ujdy.onrender.com'
-  : 'http://localhost:5005';
+const API_BASE_URL =  'http://localhost:5005';
+
 
 export const AuthProvider = ({ children, onSessionExpired }) => {
   const [user, setUser] = useState(null);
