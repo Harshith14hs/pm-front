@@ -3,7 +3,7 @@ import './ProjectList.css';
 import ProjectCard from './ProjectCard';
 import { useAuth } from '../context/AuthContext';
 
-const API_BASE_URL =  'http://localhost:5005';
+const API_BASE_URL =  'https://pm-back.onrender.com';
 
 const API_URL = `${API_BASE_URL}/api/projects`;
 const TASKS_URL = `${API_BASE_URL}/api/tasks`;

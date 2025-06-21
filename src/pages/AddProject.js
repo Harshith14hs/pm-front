@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Auth.css';
 
-const API_BASE_URL =  'http://localhost:5005';
+const API_BASE_URL =  'https://pm-back.onrender.com';
 
 const API_URL = `${API_BASE_URL}/api/projects`;
 
