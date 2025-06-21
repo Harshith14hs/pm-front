@@ -1,0 +1,7 @@
+
+.app-layout {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  background: #f7f7fa;
+} 

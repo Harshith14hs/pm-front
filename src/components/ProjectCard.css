@@ -1,0 +1,248 @@
+.project-card {
+  border-radius: 24px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  padding: 24px 30px 28px 30px;
+  min-width: 0;
+  width: 100%;
+  max-width: 340px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  margin-left: 80px;
+  box-sizing: border-box;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.project-card:hover {
+  box-shadow: 0 6px 24px rgba(25, 118, 210, 0.13);
+  transform: translateY(-4px) scale(1.025);
+  cursor: pointer;
+}
+.project-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+  color: #bfc4e2;
+}
+.project-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #222;
+}
+.project-card-desc {
+  color: #4b4848;
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+.project-card-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.progress-label {
+  font-size: 0.95rem;
+  color: #888;
+}
+.progress-bar {
+  flex: 1;
+  height: 7px;
+  background: #e0e7ff;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 0 8px;
+}
+.progress-bar-inner,
+.progress-bar-1,
+.progress-bar-2 {
+  transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.progress-bar-1 {
+  background: #ff9800;
+}
+.progress-bar-2 {
+  background: #4caf50;
+}
+.progress-bar-inner {
+  height: 100%;
+  background: linear-gradient(90deg, #ff9800 0%, #7b61ff 50%, #4caf50 100%);
+  border-radius: 6px;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.progress-percent {
+  font-size: 0.95rem;
+  color: #7b61ff;
+  font-weight: 600;
+}
+.project-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+.project-card-avatars {
+  display: flex;
+  align-items: center;
+  gap: -8px;
+}
+.project-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  object-fit: cover;
+  margin-left: -8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.project-card-timer {
+  background: #e0e7ff;
+  color: #7b61ff;
+  border-radius: 12px;
+  padding: 4px 14px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.project-card-menu {
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #28292b;
+}
+.project-card-dropdown {
+  position: absolute;
+  top: 36px;
+  right: 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  min-width: 120px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  padding: 6px 0;
+}
+.dropdown-item {
+  padding: 10px 18px;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.15s;
+  border: none;
+  background: none;
+  text-align: left;
+}
+.dropdown-item:hover {
+  background: #f0f4ff;
+  color: #1976d2;
+}
+.centered-title {
+  text-align: center;
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 2px;
+}
+.centered-desc {
+  text-align: center;
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  font-size: 1.05rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+.project-task-details {
+  background: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  margin: 10px 0 24px 0;
+  padding: 18px 22px;
+  font-size: 1rem;
+  color: #333;
+  max-width: 340px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.task-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+.task-desc {
+  color: #555;
+  margin-bottom: 4px;
+}
+.task-status, .task-assigned, .task-deadline {
+  font-size: 0.97rem;
+  color: #1976d2;
+  margin-bottom: 2px;
+}
+.project-task-dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+  margin-top: 8px;
+  z-index: 20;
+  padding: 18px 12px 12px 12px;
+  min-width: 260px;
+  max-width: 340px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.flip-card, .flip-card-inner, .flip-card-front, .flip-card-back {
+  all: unset;
+}
+.task-form-container {
+  margin-top: 12px;
+  z-index: 10;
+  position: relative;
+}
+.task-item-clean {
+  position: relative;
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 14px 16px 28px 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  min-height: 90px;
+}
+.task-content-in-card {
+  padding-right: 32px;
+}
+.delete-task-btn-corner {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  background: none;
+  border: none;
+  color: #d12a2a;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.15s;
+}
+.delete-task-btn-corner:hover {
+  color: #a00;
+}
+.project-card-creator-avatar {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.project-card-creator-avatar .project-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #1976d2;
+  background: #fff;
+}
+.project-creator-name {
+  font-size: 0.95em;
+  color: #1976d2;
+  font-weight: 500;
+  margin-left: 0.2em;
+} 
