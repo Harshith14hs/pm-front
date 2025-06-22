@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Login from './pages/Login';
 import Signin from './pages/Signin';
 import DashboardLayout from './DashboardLayout';
 import AddProject from './pages/AddProject';
 import AddMessage from './pages/AddMessage';
+import { useAuth } from './context/AuthContext';
 import './App.css';
 
 function AppWrapper() {
@@ -12,9 +13,17 @@ function AppWrapper() {
         return saved ? JSON.parse(saved) : [];
     });
     const [toast, setToast] = useState(null);
+    const { user, loading } = useAuth();
     const [currentPage, setCurrentPage] = useState('landing');
 
-    React.useEffect(() => {
+    useEffect(() => {
+        if (!loading) {
+            if (user) setCurrentPage('dashboard');
+            else setCurrentPage('landing');
+        }
+    }, [user, loading]);
+
+    useEffect(() => {
         localStorage.setItem('messages', JSON.stringify(messages));
     }, [messages]);
     const showToast = (msg) => {
