@@ -3,7 +3,7 @@ import ProjectList from './ProjectList';
 import TaskList from './TaskList';
 import './ProjectTaskBoard.css';
 
-const ProjectTaskBoard = ({ showMyProjects, search }) => {
+const ProjectTaskBoard = ({ showMyProjects, search, setCurrentPage }) => {
   const [selectedProject, setSelectedProject] = useState(null);
 
   return (
@@ -13,9 +13,10 @@ const ProjectTaskBoard = ({ showMyProjects, search }) => {
         selectedProject={selectedProject}
         showMyProjects={showMyProjects}
         search={search}
+        setCurrentPage={setCurrentPage}
       />
       {selectedProject ? (
-        <TaskList project={selectedProject} />
+        <TaskList project={selectedProject} setCurrentPage={setCurrentPage} />
       ) : null}
     </div>
   );

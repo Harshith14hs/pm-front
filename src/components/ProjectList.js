@@ -8,7 +8,7 @@ const API_BASE_URL = 'https://pm-back.onrender.com';
 const API_URL = `${API_BASE_URL}/api/projects`;
 const TASKS_URL = `${API_BASE_URL}/api/tasks`;
 
-const ProjectList = ({ onSelectProject, selectedProject, showMyProjects = false, search }) => {
+const ProjectList = ({ onSelectProject, selectedProject, showMyProjects = false, search, setCurrentPage }) => {
   const [projects, setProjects] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -116,9 +116,11 @@ const ProjectList = ({ onSelectProject, selectedProject, showMyProjects = false,
       const data = await res.json();
       console.log('Project created successfully:', data);
 
-    setName('');
-    setDescription('');
-    fetchProjects();
+      setName('');
+      setDescription('');
+      fetchProjects();
+      // Optionally, navigate to dashboard or another page:
+      // if (setCurrentPage) setCurrentPage('dashboard');
     } catch (err) {
       console.error('Error creating project:', err);
       setError(err.message || 'Failed to create project. Please try again.');

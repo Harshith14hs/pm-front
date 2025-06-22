@@ -4,7 +4,7 @@ const API_BASE_URL = 'https://pm-back.onrender.com';
 
 const API_URL = `${API_BASE_URL}/api/tasks`;
 
-const TaskList = ({ project }) => {
+const TaskList = ({ project, setCurrentPage }) => {
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');

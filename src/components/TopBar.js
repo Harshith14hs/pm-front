@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './TopBar.css';
 
-const TopBar = ({ onSearch, showToast }) => {
+const TopBar = ({ onSearch, showToast, setCurrentPage }) => {
   const auth = useAuth();
   const user = auth ? auth.user : null;
   console.log('TopBar user:', user);
@@ -13,13 +12,12 @@ const TopBar = ({ onSearch, showToast }) => {
     console.warn('TopBar: User object missing username:', user);
   }
   const logout = auth ? auth.logout : () => {};
-  const navigate = useNavigate();
   const [search, setSearch] = useState('');
 
   const handleLogout = () => {
     logout();
     if (typeof showToast === 'function') showToast('Successfully logged out!');
-    navigate('/');
+    if (setCurrentPage) setCurrentPage('landing');
   };
 
   const handleSearchChange = (e) => {
@@ -52,8 +50,8 @@ const TopBar = ({ onSearch, showToast }) => {
           </>
         ) : (
           <>
-            <button className="topbar-login" onClick={() => navigate('/login')}>Login</button>
-            <button className="topbar-signup" onClick={() => navigate('/signin')}>Sign Up</button>
+            <button className="topbar-login" onClick={() => setCurrentPage && setCurrentPage('login')}>Login</button>
+            <button className="topbar-signup" onClick={() => setCurrentPage && setCurrentPage('signin')}>Sign Up</button>
           </>
         )}
       </div>
