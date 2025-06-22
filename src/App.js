@@ -1,13 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import DashboardLayout from './DashboardLayout';
-import Login from './pages/Login';
-import Signin from './pages/Signin';
-import AddProject from './pages/AddProject';
-import AddMessage from './pages/AddMessage';
-import Home from './pages/Home';
 import './App.css';
-import { useAuth } from './context/AuthContext';
 
 function AppWrapper() {
     const [messages, setMessages] = React.useState(() => {
@@ -39,34 +31,11 @@ function AppWrapper() {
                 boxShadow: '0 2px 12px rgba(123,97,255,0.13)'
             }}>{toast}</div>
         )}
-        <App messages={messages} setMessages={setMessages} showToast={showToast} />
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+            <h1>Welcome to Project Manage App</h1>
+            <p>This is a static landing page. All navigation is handled by the backend.</p>
+        </div>
     </>;
-}
-
-function App({ messages, setMessages, showToast }) {
-    const { loading, user } = useAuth();
-    if (loading) {
-        return (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                <div className="global-spinner">Loading...</div>
-            </div>
-        );
-    }
-    const AddMessageWrapper = () => <AddMessage messages={messages} setMessages={setMessages} />;
-    return (
-        <Router>
-            <Routes>
-                <Route path="/dashboard" element={<DashboardLayout messages={messages} setMessages={setMessages} showToast={showToast} />} />
-                <Route path="/add-message" element={<AddMessageWrapper />} />
-                <Route path="/add-project" element={<AddProject />} />
-                <Route path="/login" element={<Login showToast={showToast} />} />
-                <Route path="/signin" element={<Signin showToast={showToast} />} />
-                <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <Home />} />
-                {/* Catch all route */}
-                <Route path="*" element={user ? <Navigate to="/dashboard" replace /> : <Navigate to="/" replace />} />
-            </Routes>
-        </Router>
-    );
 }
 
 export default AppWrapper; 
