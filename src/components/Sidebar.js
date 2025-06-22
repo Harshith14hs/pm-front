@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-
 import './Sidebar.css';
 
 const Sidebar = ({
@@ -17,10 +15,10 @@ const Sidebar = ({
   onShowAllProjects = () => {},
   messages = [],
   setMessages = () => {},
+  setCurrentPage
 }) => {
   const [activeIdx, setActiveIdx] = useState(0);
   const items = ['Dashboard', 'Add Project', 'My Projects', 'Messages'];
-  const navigate = useNavigate();
   const { user } = useAuth();
   const [messageText, setMessageText] = useState('');
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -68,13 +66,13 @@ const Sidebar = ({
                 className={activeIdx === idx ? 'active' : ''}
                 onClick={() => {
                   setActiveIdx(idx);
-                  if (item === 'Add Project') navigate('/add-project');
-                  if (item === 'Dashboard') {
-                    navigate('/dashboard');
+                  if (item === 'Add Project' && setCurrentPage) setCurrentPage('add-project');
+                  if (item === 'Dashboard' && setCurrentPage) {
+                    setCurrentPage('dashboard');
                     if (typeof onShowAllProjects === 'function') onShowAllProjects();
                   }
                   if (item === 'My Projects' && typeof onMyProjects === 'function') onMyProjects();
-                  if (item === 'Messages') navigate('/add-message');
+                  if (item === 'Messages' && setCurrentPage) setCurrentPage('add-message');
                 }}
               >
                 {item}
