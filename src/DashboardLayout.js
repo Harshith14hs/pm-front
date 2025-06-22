@@ -3,11 +3,9 @@ import Sidebar from './components/Sidebar';
 import TopBar from './components/TopBar';
 import ProjectTaskBoard from './components/ProjectTaskBoard';
 import ClientMessages from './components/ClientMessages';
-import { useNavigate } from 'react-router-dom';
 import './DashboardLayout.css';
 
-const DashboardLayout = ({ messages, setMessages, showToast }) => {
-  const navigate = useNavigate();
+const DashboardLayout = ({ messages, setMessages, showToast, setCurrentPage }) => {
   const [showMyProjects, setShowMyProjects] = useState(false);
   const [search, setSearch] = useState('');
 
@@ -22,10 +20,11 @@ const DashboardLayout = ({ messages, setMessages, showToast }) => {
         onShowAllProjects={handleShowAllProjects}
         messages={messages}
         setMessages={setMessages}
+        setCurrentPage={setCurrentPage}
       />
       <div className="dashboard-main-content">
-        <TopBar onSearch={handleSearch} showToast={typeof showToast === 'function' ? showToast : undefined} />
-        <ProjectTaskBoard showMyProjects={showMyProjects} search={search} />
+        <TopBar onSearch={handleSearch} showToast={typeof showToast === 'function' ? showToast : undefined} setCurrentPage={setCurrentPage} />
+        <ProjectTaskBoard showMyProjects={showMyProjects} search={search} setCurrentPage={setCurrentPage} />
       </div>
       <ClientMessages messages={messages} setMessages={setMessages} />
     </div>
