@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const AddMessage = ({ messages, setMessages }) => {
+const AddMessage = ({ messages, setMessages, setCurrentPage }) => {
   const [messageText, setMessageText] = useState('');
-  const navigate = useNavigate();
   const { user } = useAuth();
 
   const handleAddMessage = (e) => {
@@ -22,7 +20,7 @@ const AddMessage = ({ messages, setMessages }) => {
       },
     ]);
     setMessageText('');
-    setTimeout(() => navigate('/dashboard'), 0);
+    if (setCurrentPage) setCurrentPage('dashboard');
   };
 
   return (
@@ -41,7 +39,7 @@ const AddMessage = ({ messages, setMessages }) => {
       }}>
         {/* Back Arrow */}
         <button
-          onClick={() => navigate('/dashboard')}
+          onClick={() => setCurrentPage('dashboard')}
           style={{
             position: 'absolute',
             top: 18,

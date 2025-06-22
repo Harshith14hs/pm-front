@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const API_BASE_URL = 'https://pm-back.onrender.com';
-
 const API_URL = `${API_BASE_URL}/api/projects`;
 
-const AddProject = () => {
+const AddProject = ({ setCurrentPage }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -38,7 +35,7 @@ const AddProject = () => {
       }
       setName('');
       setDescription('');
-      navigate('/dashboard');
+      if (setCurrentPage) setCurrentPage('dashboard');
     } catch (err) {
       setError(err.message || 'Failed to create project. Please try again.');
     } finally {
@@ -47,96 +44,25 @@ const AddProject = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f4f7fb', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{
-        background: '#fff',
-        borderRadius: 18,
-        boxShadow: '0 4px 32px 0 rgba(25, 118, 210, 0.10)',
-        maxWidth: 420,
-        width: '100%',
-        padding: '2.5em 2em 2em 2em',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        position: 'relative',
-      }}>
-        {/* Back Arrow */}
-        <button
-          onClick={() => navigate('/dashboard')}
-          style={{
-            position: 'absolute',
-            top: 18,
-            left: 18,
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            fontSize: '1.7rem',
-            color: '#1976d2',
-            padding: 0,
-            zIndex: 2,
-          }}
-          aria-label="Back to dashboard"
-        >
-          &#8592;
-        </button>
-        <h2 style={{ color: '#1976d2', marginBottom: '1.2em', fontWeight: 700, fontSize: '2rem', letterSpacing: 0.5 }}>Add New Project</h2>
-        <form style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '1.1em' }} onSubmit={handleCreate}>
-          <input
-            type="text"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            placeholder="Project name"
-            required
-            disabled={loading}
-            style={{
-              padding: '12px 14px',
-              border: '1.5px solid #d0d7de',
-              borderRadius: 10,
-              fontSize: '1.08rem',
-              outline: 'none',
-              background: '#f8fafc',
-              transition: 'border 0.2s',
-            }}
-          />
-          <input
-            type="text"
-            value={description}
-            onChange={e => setDescription(e.target.value)}
-            placeholder="Description"
-            disabled={loading}
-            style={{
-              padding: '12px 14px',
-              border: '1.5px solid #d0d7de',
-              borderRadius: 10,
-              fontSize: '1.08rem',
-              outline: 'none',
-              background: '#f8fafc',
-              transition: 'border 0.2s',
-            }}
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              background: loading ? '#b0bec5' : 'linear-gradient(90deg, #1976d2 80%, #2196f3 100%)',
-              color: '#fff',
-              border: 'none',
-              borderRadius: 10,
-              padding: '12px 0',
-              fontWeight: 700,
-              fontSize: '1.08rem',
-              cursor: loading ? 'not-allowed' : 'pointer',
-              boxShadow: '0 2px 8px 0 rgba(25, 118, 210, 0.07)',
-              marginTop: '0.2em',
-              transition: 'background 0.2s',
-              letterSpacing: 0.5,
-            }}
-          >
-            {loading ? 'Adding...' : 'Add Project'}
-          </button>
-        </form>
-        {error && <div style={{ color: '#d12a2a', fontSize: '1.05em', marginTop: 18, textAlign: 'center', fontWeight: 500 }}>{error}</div>}
-      </div>
+    <div className="add-project-container">
+      <form className="add-project-form" onSubmit={handleCreate}>
+        <h2>Add Project</h2>
+        {error && <div className="error-message">{error}</div>}
+        <input
+          type="text"
+          placeholder="Project Name"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          required
+        />
+        <textarea
+          placeholder="Project Description"
+          value={description}
+          onChange={e => setDescription(e.target.value)}
+          required
+        />
+        <button type="submit" disabled={loading}>{loading ? 'Creating...' : 'Create Project'}</button>
+      </form>
     </div>
   );
 };

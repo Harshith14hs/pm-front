@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Login.css';
 
 const Login = (props) => {
-  const { onLogin, showToast } = props;
+  const { onLogin, showToast, setCurrentPage } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
   const auth = useAuth();
 
   const handleSubmit = async (e) => {
@@ -18,7 +16,7 @@ const Login = (props) => {
       await auth.login(email, password);
       if (onLogin) onLogin(auth.user);
       if (typeof showToast === 'function') showToast('Successfully logged in!');
-      navigate('/dashboard');
+      if (setCurrentPage) setCurrentPage('dashboard');
     } catch (err) {
       setError(err.message || 'Login failed');
     }
@@ -52,7 +50,7 @@ const Login = (props) => {
             type="button"
             className="login-ui-button"
             style={{ marginTop: 0, marginLeft: '0.5rem', background: '#e0e7ff', color: '#4f8cff' }}
-            onClick={() => navigate('/signin')}
+            onClick={() => setCurrentPage && setCurrentPage('signin')}
           >
             Sign Up
           </button>

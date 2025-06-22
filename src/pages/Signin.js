@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const API_BASE_URL = 'https://pm-back.onrender.com';
 const API_URL = `${API_BASE_URL}/api/auth/register`;
 
 const Signin = (props) => {
-  const { onSignin, showToast } = props;
+  const { onSignin, showToast, setCurrentPage } = props;
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +25,7 @@ const Signin = (props) => {
       localStorage.setItem('token', data.token);
       if (onSignin) onSignin(data.user);
       if (typeof showToast === 'function') showToast('Successfully logged in!');
-      navigate('/dashboard');
+      if (setCurrentPage) setCurrentPage('dashboard');
     } catch (err) {
       setError(err.message);
     }
@@ -64,7 +62,7 @@ const Signin = (props) => {
         />
         <button className="login-ui-button" type="submit">Sign Up</button>
         <p className="login-ui-switch">
-          Already have an account? <Link to="/login">Login</Link>
+          Already have an account? <button type="button" style={{background:'none',color:'#4f8cff',border:'none',cursor:'pointer'}} onClick={() => setCurrentPage && setCurrentPage('login')}>Login</button>
         </p>
       </form>
     </div>
