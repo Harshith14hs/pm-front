@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 import './Login.css';
 
 const API_BASE_URL = 'https://pm-back.onrender.com';
@@ -10,24 +11,17 @@ const Signin = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const auth = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     try {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Sign up failed');
-      localStorage.setItem('token', data.token);
-      if (onSignin) onSignin(data.user);
-      if (typeof showToast === 'function') showToast('Successfully logged in!');
+      await auth.register(username, email, password);
+      if (typeof showToast === 'function') showToast('Successfully signed up!');
       if (setCurrentPage) setCurrentPage('dashboard');
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Sign up failed');
     }
   };
 
