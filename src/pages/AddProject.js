@@ -47,6 +47,25 @@ const AddProject = ({ setCurrentPage }) => {
   return (
     <div className="add-project-container">
       <form className="add-project-form" onSubmit={handleCreate}>
+        <button
+          type="button"
+          aria-label="Back to dashboard"
+          onClick={() => setCurrentPage && setCurrentPage('dashboard')}
+          style={{
+            position: 'absolute',
+            top: 18,
+            left: 18,
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '1.7rem',
+            color: '#1976d2',
+            padding: 0,
+            zIndex: 2,
+          }}
+        >
+          &#8592;
+        </button>
         <h2>Add Project</h2>
         {error && <div className="error-message">{error}</div>}
         <input
