@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Login from './pages/Login';
 import Signin from './pages/Signin';
 import DashboardLayout from './DashboardLayout';
@@ -7,11 +7,13 @@ import AddMessage from './pages/AddMessage';
 import './App.css';
 
 function AppWrapper() {
-    const [messages, setMessages] = React.useState(() => {
+    const [messages, setMessages] = useState(() => {
         const saved = localStorage.getItem('messages');
         return saved ? JSON.parse(saved) : [];
     });
-    const [toast, setToast] = React.useState(null);
+    const [toast, setToast] = useState(null);
+    const [currentPage, setCurrentPage] = useState('landing');
+
     React.useEffect(() => {
         localStorage.setItem('messages', JSON.stringify(messages));
     }, [messages]);
@@ -21,17 +23,16 @@ function AppWrapper() {
     };
 
     let page = null;
-    const path = window.location.pathname;
-    if (path === '/login') {
-        page = <Login showToast={showToast} />;
-    } else if (path === '/signin') {
-        page = <Signin showToast={showToast} />;
-    } else if (path === '/dashboard') {
-        page = <DashboardLayout messages={messages} setMessages={setMessages} showToast={showToast} />;
-    } else if (path === '/add-project') {
-        page = <AddProject />;
-    } else if (path === '/add-message') {
-        page = <AddMessage messages={messages} setMessages={setMessages} />;
+    if (currentPage === 'login') {
+        page = <Login showToast={showToast} setCurrentPage={setCurrentPage} />;
+    } else if (currentPage === 'signin') {
+        page = <Signin showToast={showToast} setCurrentPage={setCurrentPage} />;
+    } else if (currentPage === 'dashboard') {
+        page = <DashboardLayout messages={messages} setMessages={setMessages} showToast={showToast} setCurrentPage={setCurrentPage} />;
+    } else if (currentPage === 'add-project') {
+        page = <AddProject setCurrentPage={setCurrentPage} />;
+    } else if (currentPage === 'add-message') {
+        page = <AddMessage messages={messages} setMessages={setMessages} setCurrentPage={setCurrentPage} />;
     } else {
         page = (
             <div style={{
@@ -48,7 +49,7 @@ function AppWrapper() {
                     Manage your projects here with ease. Sign in or create an account to get started!
                 </p>
                 <div style={{ display: 'flex', gap: '1.5em' }}>
-                    <a href="/login" style={{
+                    <button onClick={() => setCurrentPage('login')} style={{
                         padding: '0.7em 2.2em',
                         fontSize: '1.1rem',
                         borderRadius: '2em',
@@ -61,8 +62,8 @@ function AppWrapper() {
                         transition: 'background 0.2s',
                         textDecoration: 'none',
                         display: 'inline-block'
-                    }}>Login</a>
-                    <a href="/signin" style={{
+                    }}>Login</button>
+                    <button onClick={() => setCurrentPage('signin')} style={{
                         padding: '0.7em 2.2em',
                         fontSize: '1.1rem',
                         borderRadius: '2em',
@@ -75,7 +76,7 @@ function AppWrapper() {
                         transition: 'background 0.2s',
                         textDecoration: 'none',
                         display: 'inline-block'
-                    }}>Sign Up</a>
+                    }}>Sign Up</button>
                 </div>
             </div>
         );
