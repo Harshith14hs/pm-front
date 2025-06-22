@@ -45,8 +45,20 @@ const AddProject = ({ setCurrentPage }) => {
   };
 
   return (
-    <div className="add-project-container">
-      <form className="add-project-form" onSubmit={handleCreate}>
+    <div style={{ minHeight: '100vh', background: '#f4f7fb', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{
+        background: '#fff',
+        borderRadius: 18,
+        boxShadow: '0 4px 32px 0 rgba(25, 118, 210, 0.10)',
+        maxWidth: 420,
+        width: '100%',
+        padding: '2.5em 2em 2em 2em',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        position: 'relative',
+      }}>
+        {/* Back Arrow */}
         <button
           type="button"
           aria-label="Back to dashboard"
@@ -66,23 +78,56 @@ const AddProject = ({ setCurrentPage }) => {
         >
           &#8592;
         </button>
-        <h2>Add Project</h2>
-        {error && <div className="error-message">{error}</div>}
-        <input
-          type="text"
-          placeholder="Project Name"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          required
-        />
-        <textarea
-          placeholder="Project Description"
-          value={description}
-          onChange={e => setDescription(e.target.value)}
-          required
-        />
-        <button type="submit" disabled={loading}>{loading ? 'Creating...' : 'Create Project'}</button>
-      </form>
+        <h2 style={{ color: '#1976d2', marginBottom: '1.2em', fontWeight: 700, fontSize: '2rem', letterSpacing: 0.5 }}>Add Project</h2>
+        <form style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '1.1em' }} onSubmit={handleCreate}>
+          <input
+            type="text"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            placeholder="Project Name"
+            required
+            disabled={loading}
+            style={{
+              padding: '12px 14px',
+              border: '1.5px solid #d0d7de',
+              borderRadius: 10,
+              fontSize: '1.08rem',
+              outline: 'none',
+              background: '#f8fafc',
+              transition: 'border 0.2s',
+            }}
+          />
+          <textarea
+            value={description}
+            onChange={e => setDescription(e.target.value)}
+            placeholder="Project Description"
+            required
+            rows={4}
+            style={{ resize: 'none', borderRadius: 10, padding: 12, border: '1.5px solid #d0d7de', fontSize: '1.08rem', background: '#f8fafc', outline: 'none' }}
+          />
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
+              background: loading ? '#b0bec5' : 'linear-gradient(90deg, #1976d2 80%, #2196f3 100%)',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 10,
+              padding: '12px 0',
+              fontWeight: 700,
+              fontSize: '1.08rem',
+              cursor: loading ? 'not-allowed' : 'pointer',
+              boxShadow: '0 2px 8px 0 rgba(25, 118, 210, 0.07)',
+              marginTop: '0.2em',
+              transition: 'background 0.2s',
+              letterSpacing: 0.5,
+            }}
+          >
+            {loading ? 'Creating...' : 'Create Project'}
+          </button>
+        </form>
+        {error && <div style={{ color: '#d12a2a', fontSize: '1.05em', marginTop: 18, textAlign: 'center', fontWeight: 500 }}>{error}</div>}
+      </div>
     </div>
   );
 };

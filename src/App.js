@@ -7,14 +7,28 @@ import AddMessage from './pages/AddMessage';
 import { useAuth } from './context/AuthContext';
 import './App.css';
 
+const API_BASE_URL = 'https://pm-back.onrender.com';
+
 function AppWrapper() {
-    const [messages, setMessages] = useState(() => {
-        const saved = localStorage.getItem('messages');
-        return saved ? JSON.parse(saved) : [];
-    });
+    const [messages, setMessages] = useState([]);
     const [toast, setToast] = useState(null);
     const { user, loading } = useAuth();
     const [currentPage, setCurrentPage] = useState('landing');
+
+    // Fetch messages from backend
+    const fetchMessages = async () => {
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/messages`);
+            const data = await res.json();
+            setMessages(Array.isArray(data) ? data : []);
+        } catch (err) {
+            setMessages([]);
+        }
+    };
+
+    useEffect(() => {
+        fetchMessages();
+    }, []);
 
     useEffect(() => {
         if (!loading) {
@@ -23,12 +37,33 @@ function AppWrapper() {
         }
     }, [user, loading]);
 
-    useEffect(() => {
-        localStorage.setItem('messages', JSON.stringify(messages));
-    }, [messages]);
     const showToast = (msg) => {
         setToast(msg);
         setTimeout(() => setToast(null), 2000);
+    };
+
+    // Add message to backend
+    const addMessage = async (msg) => {
+        try {
+            await fetch(`${API_BASE_URL}/api/messages`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(msg)
+            });
+            fetchMessages();
+        } catch (err) {
+            showToast('Failed to add message');
+        }
+    };
+
+    // Delete message from backend
+    const deleteMessage = async (id) => {
+        try {
+            await fetch(`${API_BASE_URL}/api/messages/${id}`, { method: 'DELETE' });
+            fetchMessages();
+        } catch (err) {
+            showToast('Failed to delete message');
+        }
     };
 
     let page = null;
@@ -37,11 +72,11 @@ function AppWrapper() {
     } else if (currentPage === 'signin') {
         page = <Signin showToast={showToast} setCurrentPage={setCurrentPage} />;
     } else if (currentPage === 'dashboard') {
-        page = <DashboardLayout messages={messages} setMessages={setMessages} showToast={showToast} setCurrentPage={setCurrentPage} />;
+        page = <DashboardLayout messages={messages} setMessages={setMessages} addMessage={addMessage} deleteMessage={deleteMessage} showToast={showToast} setCurrentPage={setCurrentPage} />;
     } else if (currentPage === 'add-project') {
         page = <AddProject setCurrentPage={setCurrentPage} />;
     } else if (currentPage === 'add-message') {
-        page = <AddMessage messages={messages} setMessages={setMessages} setCurrentPage={setCurrentPage} />;
+        page = <AddMessage addMessage={addMessage} setCurrentPage={setCurrentPage} />;
     } else {
         page = (
             <div style={{
