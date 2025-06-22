@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const API_BASE_URL =  'https://prm-back-harshith-hs-projects.vercel.app/';
+const API_BASE_URL = 'https://pm-back.onrender.com';
 
 const API_URL = `${API_BASE_URL}/api/projects`;
 
