@@ -1,24 +1,21 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
-const AddMessage = ({ messages, setMessages, setCurrentPage }) => {
+const AddMessage = ({ addMessage, setCurrentPage }) => {
   const [messageText, setMessageText] = useState('');
   const { user } = useAuth();
 
-  const handleAddMessage = (e) => {
+  const handleAddMessage = async (e) => {
     e.preventDefault();
     if (!messageText.trim()) return;
-    setMessages(prev => [
-      ...prev,
-      {
-        name: user?.username || 'User',
-        avatar: user?.username
-          ? `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username)}&background=1976d2&color=fff&size=64&rounded=true`
-          : 'https://ui-avatars.com/api/?name=User&background=1976d2&color=fff&size=64&rounded=true',
-        text: messageText,
-        date: new Date().toLocaleDateString(),
-      },
-    ]);
+    await addMessage({
+      name: user?.username || 'User',
+      avatar: user?.username
+        ? `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username)}&background=1976d2&color=fff&size=64&rounded=true`
+        : 'https://ui-avatars.com/api/?name=User&background=1976d2&color=fff&size=64&rounded=true',
+      text: messageText,
+      date: new Date().toLocaleDateString(),
+    });
     setMessageText('');
     if (setCurrentPage) setCurrentPage('dashboard');
   };
